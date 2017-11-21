@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.dzy.soymilk.dao.MachineMapper">
+  <resultMap id="BaseResultMap" type="org.dzy.soymilk.mapping.Machine">
+    <id column="machine_id" jdbcType="VARCHAR" property="machineId" />
+    <result column="machine_name" jdbcType="VARCHAR" property="machineName" />
+    <result column="app_id" jdbcType="VARCHAR" property="appId" />
+    <result column="mch_id" jdbcType="VARCHAR" property="mchId" />
+    <result column="api_key" jdbcType="VARCHAR" property="apiKey" />
+    <result column="create_ip" jdbcType="VARCHAR" property="createIp" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    machine_id, machine_name, app_id, mch_id, api_key, create_ip
+  </sql>
+  <select id="getAllMachine" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine_info
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine_info
+    where machine_id = #{machineId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from machine_info
+    where machine_id = #{machineId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="org.dzy.soymilk.mapping.Machine">
+    insert into machine_info (machine_id, machine_name, app_id, 
+      mch_id, api_key, create_ip
+      )
+    values (#{machineId,jdbcType=VARCHAR}, #{machineName,jdbcType=VARCHAR}, #{appId,jdbcType=VARCHAR}, 
+      #{mchId,jdbcType=VARCHAR}, #{apiKey,jdbcType=VARCHAR}, #{createIp,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="org.dzy.soymilk.mapping.Machine">
+    insert into machine_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="machineId != null">
+        machine_id,
+      </if>
+      <if test="machineName != null">
+        machine_name,
+      </if>
+      <if test="appId != null">
+        app_id,
+      </if>
+      <if test="mchId != null">
+        mch_id,
+      </if>
+      <if test="apiKey != null">
+        api_key,
+      </if>
+      <if test="createIp != null">
+        create_ip,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="machineId != null">
+        #{machineId,jdbcType=VARCHAR},
+      </if>
+      <if test="machineName != null">
+        #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null">
+        #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="apiKey != null">
+        #{apiKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createIp != null">
+        #{createIp,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="org.dzy.soymilk.mapping.Machine">
+    update machine_info
+    <set>
+      <if test="machineName != null">
+        machine_name = #{machineName,jdbcType=VARCHAR},
+      </if>
+      <if test="appId != null">
+        app_id = #{appId,jdbcType=VARCHAR},
+      </if>
+      <if test="mchId != null">
+        mch_id = #{mchId,jdbcType=VARCHAR},
+      </if>
+      <if test="apiKey != null">
+        api_key = #{apiKey,jdbcType=VARCHAR},
+      </if>
+      <if test="createIp != null">
+        create_ip = #{createIp,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where machine_id = #{machineId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="org.dzy.soymilk.mapping.Machine">
+    update machine_info
+    set machine_name = #{machineName,jdbcType=VARCHAR},
+      app_id = #{appId,jdbcType=VARCHAR},
+      mch_id = #{mchId,jdbcType=VARCHAR},
+      api_key = #{apiKey,jdbcType=VARCHAR},
+      create_ip = #{createIp,jdbcType=VARCHAR}
+    where machine_id = #{machineId,jdbcType=VARCHAR}
+  </update>
+</mapper>

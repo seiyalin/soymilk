@@ -1,0 +1,5 @@
+org\dzy\soymilk\controller\MachineController.class
+org\dzy\soymilk\service\MachineServiceImpl.class
+org\dzy\soymilk\service\MachineService.class
+org\dzy\soymilk\mapping\Machine.class
+org\dzy\soymilk\dao\MachineMapper.class
