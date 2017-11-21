@@ -30,14 +30,15 @@ public class MachineController {
 	@RequestMapping(value="/machineManage",method=RequestMethod.GET)
 	public String manageMachine(HttpServletRequest req, Model model){
 		List<Machine> list = machineService.getAllMachine();
-		model.addAllAttributes(list);
-		return "machine";
+		model.addAttribute("list",list);
+		return "AllMachine";
 	}
 	
 	@RequestMapping(value="/saveMachine", method=RequestMethod.POST)
 	@ResponseBody
-	public void saveMachine(@RequestBody Machine machine){
+	public String saveMachine(@RequestBody Machine machine){
 		machineService.insertMachine(machine);
+		return "success";
 	}
 	
 	@RequestMapping("/showMachine")

@@ -2,7 +2,7 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">  
 <html>
 <body>
-<h2>Hello World!</h2>
+<h2>该设备详细信息：</h2>
 <h3>机器编号：${machine.machineId}</h3>
 <h3>机器名称：${machine.machineName}</h3>
 <h3>appId：${machine.appId}</h3>
