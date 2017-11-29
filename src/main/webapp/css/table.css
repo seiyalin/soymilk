@@ -1,0 +1,26 @@
+@CHARSET "UTF-8";
+.page-heading {
+    padding: 15px;
+    position: relative;
+}
+.wrapper {
+    padding: 15px;
+}
+.tools {
+    margin: -7px -5px;
+}
+.tools a {
+    background: #E3E4E8;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    color: #858582;
+    float: left;
+    margin-left: 3px;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.tools a:hover {
+    background: #65cea7;
+    color: #fff;
+}

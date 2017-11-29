@@ -4,7 +4,7 @@
 <html>
 <body>
 <h2>所有设备信息：</h2>
-<h3>机器编号		机器名称		appId		mchId		mchId		createIp</h3>
+<h3>机器编号		机器名称		appId		mchId		apiKey		createIp</h3>
 <c:forEach items="${list}" var="machine">
 	<br/>
 	<h3>${machine.machineId}&emsp;${machine.machineName}&emsp;${machine.appId}&emsp;${machine.mchId}&emsp;
