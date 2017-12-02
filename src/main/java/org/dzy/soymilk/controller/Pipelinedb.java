@@ -25,22 +25,32 @@ public class Pipelinedb {
 	
 	@RequestMapping("/orderSave")
 	@ResponseBody
+	/* soymilk/orderSave.do?producer_id=SH&channel_id=HK&machine_id=SHJ001&product_id=1&num=2&price=8*/
 	public JSONObject OrderSave(HttpServletRequest req) throws SQLException{
 		Connection conn = ConnUtil.getConn();
 		Statement stmt = conn.createStatement();
-		ResultSet rs;
-		int x = Integer.parseInt(req.getParameter("x"));
-		int y = Integer.parseInt(req.getParameter("y"));
+		/*ResultSet rs;*/
+		/*int x = Integer.parseInt(req.getParameter("x"));
+		int y = Integer.parseInt(req.getParameter("y"));*/
+		String producer_id = req.getParameter("producer_id");
+		String channel_id = req.getParameter("channel_id");
+		String machine_id = req.getParameter("machine_id");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
-		String sql = "INSERT INTO stream1 (x,y) VALUES (" + Integer.toString(x) +","+ Integer.toString(y)+")";
+		String product_id = req.getParameter("product_id");
+		int num = Integer.parseInt(req.getParameter("num"));
+		String price = req.getParameter("price");
+		String sql = "INSERT INTO stm (producer_id,channel_id,machine_id,time,product_id,num,price) VALUES "
+				+ "('" + producer_id +"','" + channel_id +"','"+ machine_id +"','" + time+"','"+product_id
+				+"',"+num+","+ price+")";
+		System.out.println(sql);
 		stmt.execute(sql);
-		rs = stmt.executeQuery("SELECT * FROM v");
+		/*rs = stmt.executeQuery("SELECT * FROM v");
 	    while (rs.next())
 	    {
 	      int id = rs.getInt("x");
 	      int count = rs.getInt("count");
 	      System.out.println(id + " = " + count);
-	    }    
+	    }    */
 	    stmt.close();
 	    conn.close();
 		JSONObject result = new JSONObject();
@@ -50,6 +60,7 @@ public class Pipelinedb {
 	
 	@RequestMapping("/orderShow")
 	@ResponseBody
+	/*soymilk/orderShow.do?id=01*/
 	public JSONObject getView(HttpServletRequest req) throws SQLException{
 		String id = req.getParameter("id");  //流视图编号
 		JSONObject result = new JSONObject();
@@ -58,6 +69,64 @@ public class Pipelinedb {
 		Statement stmt = conn.createStatement();
 		ResultSet rs;
 		rs = stmt.executeQuery("SELECT * FROM sv"+id);
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		while (rs.next())
+	    {
+			JSONObject obj = new JSONObject();
+			for (int i = 1; i <= columnCount; i++) {  
+		        String columnName =metaData.getColumnLabel(i);  
+		        String value = rs.getString(columnName);  
+		        obj.put(columnName, value);  
+		    }   
+			//obj.put("producer_id", rs.getString("producer_id"));
+			arr.add(obj);
+	    } 
+		result.put("data", arr);
+		return result;
+	}
+	
+	@RequestMapping("/orderShowSelected")
+	@ResponseBody
+	/*soymilk/orderShowSelected.do?id=01&producer_id=SH&channel_id=YP&year=2017&month=12*/
+	public JSONObject getViewSelected(HttpServletRequest req) throws SQLException{
+		String id = req.getParameter("id");  //流视图编号
+		String whereClaus = new String();
+		if(req.getParameter("producer_id")!=null)
+			whereClaus = " WHERE producer_id ="+"'"+req.getParameter("producer_id")+"'";
+		if(req.getParameter("channel_id")!=null){
+			if(whereClaus.length()>0)
+				whereClaus += " AND channel_id ="+"'"+req.getParameter("channel_id")+"'";
+			else
+				whereClaus = " WHERE channel_id ="+"'"+req.getParameter("channel_id")+"'";
+		}
+		if(req.getParameter("year")!=null){
+			if(whereClaus.length()>0){
+				if(Integer.parseInt(id)%8<3)  //要过滤的视图是日销量
+					whereClaus += " AND extract(year from day) ="+req.getParameter("year");
+				else		//要过滤的视图是月销量
+					whereClaus += " AND extract(year from month) ="+req.getParameter("year");
+			}				
+			else
+				if(Integer.parseInt(id)%8<3)  //要过滤的视图是日销量
+					whereClaus = " WHERE extract(year from day) ="+req.getParameter("year");
+				else		//要过滤的视图是月销量
+					whereClaus = " WHERE extract(year from month) ="+req.getParameter("year");
+		}
+		if(req.getParameter("month")!=null){
+			if(whereClaus.length()>0){
+				whereClaus += " AND extract(month from day) ="+req.getParameter("month");
+			}
+			else
+				whereClaus = " WHERE extract(month from day) ="+req.getParameter("month");
+		}
+		JSONObject result = new JSONObject();
+		JSONArray arr = new JSONArray();
+		Connection conn = ConnUtil.getConn();
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
+		System.out.println(whereClaus);
+		rs = stmt.executeQuery("SELECT * FROM sv" + id + whereClaus);
 		ResultSetMetaData metaData = rs.getMetaData();
 		int columnCount = metaData.getColumnCount();
 		while (rs.next())
