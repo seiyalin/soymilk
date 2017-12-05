@@ -24,19 +24,19 @@ import com.alibaba.fastjson.JSONObject;
 public class Pipelinedb {
 	
 	@RequestMapping("/orderSave")
-	@ResponseBody
-	/* soymilk/orderSave.do?producer_id=SH&channel_id=HK&machine_id=SHJ001&product_id=1&num=2&price=8*/
-	public JSONObject OrderSave(HttpServletRequest req) throws SQLException{
+	/*@ResponseBody*/
+	/* soymilk/orderSave.do?producerId=SH&channelId=HK&machineId=SHJ001&productId=1&num=2&price=8*/
+	public String OrderSave(HttpServletRequest req) throws SQLException{
 		Connection conn = ConnUtil.getConn();
 		Statement stmt = conn.createStatement();
 		/*ResultSet rs;*/
 		/*int x = Integer.parseInt(req.getParameter("x"));
 		int y = Integer.parseInt(req.getParameter("y"));*/
-		String producer_id = req.getParameter("producer_id");
-		String channel_id = req.getParameter("channel_id");
-		String machine_id = req.getParameter("machine_id");
+		String producer_id = req.getParameter("producerId");
+		String channel_id = req.getParameter("channelId");
+		String machine_id = req.getParameter("machineId");
 		Timestamp time = new Timestamp(System.currentTimeMillis());
-		String product_id = req.getParameter("product_id");
+		String product_id = req.getParameter("productId");
 		int num = Integer.parseInt(req.getParameter("num"));
 		String price = req.getParameter("price");
 		String sql = "INSERT INTO stm (producer_id,channel_id,machine_id,time,product_id,num,price) VALUES "
@@ -53,9 +53,10 @@ public class Pipelinedb {
 	    }    */
 	    stmt.close();
 	    conn.close();
-		JSONObject result = new JSONObject();
+		/*JSONObject result = new JSONObject();
 		result.put("success", true);
-		return result;
+		return result;*/
+	    return "order";
 	}
 	
 	@RequestMapping("/orderShow")
@@ -89,7 +90,7 @@ public class Pipelinedb {
 	@RequestMapping("/orderShowSelected")
 	@ResponseBody
 	/*soymilk/orderShowSelected.do?id=01&producer_id=SH&channel_id=YP&year=2017&month=12*/
-	public JSONObject getViewSelected(HttpServletRequest req) throws SQLException{
+	public JSONArray getViewSelected(HttpServletRequest req) throws SQLException{
 		String id = req.getParameter("id");  //流视图编号
 		String whereClaus = new String();
 		if(req.getParameter("producer_id")!=null)
@@ -141,7 +142,7 @@ public class Pipelinedb {
 			arr.add(obj);
 	    } 
 		result.put("data", arr);
-		return result;
+		return arr;
 	}
 
 }
