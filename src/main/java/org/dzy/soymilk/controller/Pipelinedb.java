@@ -9,8 +9,10 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import org.dzy.soymilk.utils.ConnUtil;
+import org.dzy.soymilk.utils.ExcelUtil;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +24,13 @@ import com.alibaba.fastjson.JSONObject;
 @EnableWebMvc
 @Controller
 public class Pipelinedb {
+	
+	String[] titles = new String[]{"none","终端设备分口味日销量统计表","终端设备日销量统计表","终端设备分口味月销量统计表","终端设备月销量统计表",
+			"终端设备分口味年销量统计表","终端设备年销量统计表","终端设备分口味总销量统计表","终端设备总销量统计表","渠道商分口味日销量统计表","渠道商日销量统计表",
+			"渠道商分口味月销量统计表","渠道商月销量统计表","渠道商分口味年销量统计表","渠道商年销量统计表","渠道商分口味总销量统计表","渠道商总销量统计表",
+			"生产商分口味日销量统计表","生产商日销量统计表","生产商分口味月销量统计表","生产商月销量统计表","生产商分口味年销量统计表","生产商年销量统计表",
+			"生产商分口味总销量统计表","生产商总销量统计表","豆芝缘分口味日销量统计表","豆芝缘日销量统计表","豆芝缘分口味月销量统计表","豆芝缘月销量统计表",
+			"豆芝缘分口味年销量统计表","豆芝缘年销量统计表","豆芝缘分口味总销量统计表","豆芝缘总销量统计表"};
 	
 	@RequestMapping("/orderSave")
 	/*@ResponseBody*/
@@ -62,7 +71,7 @@ public class Pipelinedb {
 	@RequestMapping("/orderShow")
 	@ResponseBody
 	/*soymilk/orderShow.do?id=01*/
-	public JSONObject getView(HttpServletRequest req) throws SQLException{
+	public JSONObject getView(HttpServletRequest req, HttpServletResponse response) throws SQLException{
 		String id = req.getParameter("id");  //流视图编号
 		JSONObject result = new JSONObject();
 		JSONArray arr = new JSONArray();
@@ -83,6 +92,8 @@ public class Pipelinedb {
 			//obj.put("producer_id", rs.getString("producer_id"));
 			arr.add(obj);
 	    } 
+		String title = titles[Integer.parseInt(id)];
+		ExcelUtil.downloadExcelFile(title, arr, response);
 		result.put("data", arr);
 		return result;
 	}
