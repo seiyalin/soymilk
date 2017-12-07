@@ -134,3 +134,32 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
   	    {name:'--', dayList:['--']}
    	]}
 	];
+	
+	function showOnline(){
+		$.post("showOnline.do",$("#selectQuery").serialize(),function(json){
+			
+			/*$('#columns').columns('destroy');*/
+			/*$('#columns').columns('create');*/
+			$('#columns').columns({data: json,});
+			/*createTable(data);*/
+		});
+		/*$("#selectQuery").removeAttr('action');
+		$("#selectQuery").attr('action',"showOnline.do");
+		$("#selectQuery").submit();*/
+	}
+	function getExcel(){
+		/*$.post("getExcel.do",$("#selectQuery").serialize(),function(){
+			createTable(data);
+		});*/
+		/*生成excel用表单提交，ajax不能生成*/
+		$("#selectQuery").removeAttr('action');
+		$("#selectQuery").attr('action',"getExcel.do");
+		$("#selectQuery").submit();
+	}
+	
+	
+	/*$(document).ready(function(){
+		$("#selectQuery").ajaxForm(function(data){
+			alert(data);
+		});
+	});*/

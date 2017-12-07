@@ -150,7 +150,7 @@ public class ExcelUtil {
 	            response.reset();
 
 	            response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8"); 
-	            response.setHeader("Content-Disposition", "attachment;filename="+ new String((title + ".xlsx").getBytes(), "iso-8859-1"));
+	            response.setHeader("Content-Disposition", "attachment;filename="+ new String((title).getBytes("gbk"), "iso-8859-1")+ ".xlsx");
 	            response.setContentLength(content.length);
 	            ServletOutputStream outputStream = response.getOutputStream();
 	            BufferedInputStream bis = new BufferedInputStream(is);

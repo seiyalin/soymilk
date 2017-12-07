@@ -68,6 +68,209 @@ public class Pipelinedb {
 	    return "order";
 	}
 	
+	@RequestMapping("/getExcel")
+	@ResponseBody
+	/*soymilk/orderShow.do?id=01*/
+	public void getExcel(HttpServletRequest req, HttpServletResponse response) throws SQLException{
+		String producerId = req.getParameter("producerId");  //生产商
+		String channelId = req.getParameter("channelId");
+		String machineId = req.getParameter("machineId");
+		String productId = req.getParameter("productId");
+		String year = req.getParameter("year");
+		String month = req.getParameter("month");
+		String day = req.getParameter("day");
+		String whereClaus = new String();
+		int viewId =1;
+		if(producerId.equals("--")){
+			viewId += 24;
+		}
+		else{
+			if(!producerId.equals("all")){
+				whereClaus = addWhereClaus(whereClaus, "producer_id", producerId);
+			}
+			if(channelId.equals("--")){
+				viewId += 16;
+			}
+			else{
+				if(!channelId.equals("all")){
+					whereClaus = addWhereClaus(whereClaus, "channel_id", channelId);
+				}
+				if(machineId.equals("--"))
+					viewId += 8;
+				else{
+					if(!machineId.equals("all")){
+						whereClaus = addWhereClaus(whereClaus, "machine_id", machineId);
+					}
+				}
+			}
+		}
+		if(productId.equals("--"))
+			viewId++;
+		else if(!productId.equals("all")){
+			whereClaus = addWhereClaus(whereClaus, "product_id", productId);
+		}
+		if(year.equals("--"))
+			viewId +=6;
+		else{
+			if(month.equals("--")){
+				viewId +=4;
+				if(!year.equals("all"))
+					whereClaus = addWhereClaus(whereClaus, "extract(year from year)", year);
+			}
+			else{
+				if(day.equals("--")){
+					viewId +=2;
+					if(!year.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(year from month)", year);
+					if(!month.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(month from month)", month);
+				}
+				else{
+					if(!year.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(year from day)", year);
+					if(!month.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(month from day)", month);
+					if(!day.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(day from day)", day);
+				}
+			}				
+		}
+		JSONArray arr = new JSONArray();
+		Connection conn = ConnUtil.getConn();
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
+		rs = stmt.executeQuery("SELECT * FROM sv"+ viewId + whereClaus);
+		System.out.println("SELECT * FROM sv"+ viewId + whereClaus);
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		while (rs.next())
+	    {
+			JSONObject obj = new JSONObject();
+			for (int i = 1; i <= columnCount; i++) {  
+		        String columnName =metaData.getColumnLabel(i);  
+		        String value = rs.getString(columnName);
+		        if(columnName.equals("day"))
+		        	value = value.substring(0,10);
+		        if(columnName.equals("month"))
+		        	value = value.substring(0,7);
+		        if(columnName.equals("year"))
+		        	value = value.substring(0,4);
+		        obj.put(columnName, value);  
+		    }   
+			//obj.put("producer_id", rs.getString("producer_id"));
+			arr.add(obj);
+	    } 
+		String title = titles[viewId];
+		ExcelUtil.downloadExcelFile(title, arr, response);
+		
+	}
+	
+	@RequestMapping("/showOnline")
+	@ResponseBody
+	/*soymilk/showOnline*/
+	public JSONArray showOnline(HttpServletRequest req, HttpServletResponse response) throws SQLException{
+		String producerId = req.getParameter("producerId");  //生产商
+		String channelId = req.getParameter("channelId");
+		String machineId = req.getParameter("machineId");
+		String productId = req.getParameter("productId");
+		String year = req.getParameter("year");
+		String month = req.getParameter("month");
+		String day = req.getParameter("day");
+		String whereClaus = new String();
+		int viewId =1;
+		if(producerId.equals("--")){
+			viewId += 24;
+		}
+		else{
+			if(!producerId.equals("all")){
+				whereClaus = addWhereClaus(whereClaus, "producer_id", producerId);
+			}
+			if(channelId.equals("--")){
+				viewId += 16;
+			}
+			else{
+				if(!channelId.equals("all")){
+					whereClaus = addWhereClaus(whereClaus, "channel_id", channelId);
+				}
+				if(machineId.equals("--"))
+					viewId += 8;
+				else{
+					if(!machineId.equals("all")){
+						whereClaus = addWhereClaus(whereClaus, "machine_id", machineId);
+					}
+				}
+			}
+		}
+		if(productId.equals("--"))
+			viewId++;
+		else if(!productId.equals("all")){
+			whereClaus = addWhereClaus(whereClaus, "product_id", productId);
+		}
+		if(year.equals("--"))
+			viewId +=6;
+		else{
+			if(month.equals("--")){
+				viewId +=4;
+				if(!year.equals("all"))
+					whereClaus = addWhereClaus(whereClaus, "extract(year from year)", year);
+			}
+			else{
+				if(day.equals("--")){
+					viewId +=2;
+					if(!year.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(year from month)", year);
+					if(!month.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(month from month)", month);
+				}
+				else{
+					if(!year.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(year from day)", year);
+					if(!month.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(month from day)", month);
+					if(!day.equals("all"))
+						whereClaus = addWhereClaus(whereClaus, "extract(day from day)", day);
+				}
+			}				
+		}
+		JSONArray arr = new JSONArray();
+		Connection conn = ConnUtil.getConn();
+		Statement stmt = conn.createStatement();
+		ResultSet rs;
+		rs = stmt.executeQuery("SELECT * FROM sv"+ viewId + whereClaus);
+		System.out.println("SELECT * FROM sv"+ viewId + whereClaus);
+		ResultSetMetaData metaData = rs.getMetaData();
+		int columnCount = metaData.getColumnCount();
+		while (rs.next())
+	    {
+			JSONObject obj = new JSONObject();
+			for (int i = 1; i <= columnCount; i++) {  
+		        String columnName =metaData.getColumnLabel(i);  
+		        String value = rs.getString(columnName);
+		        if(columnName.equals("day"))
+		        	value = value.substring(0,10);
+		        if(columnName.equals("month"))
+		        	value = value.substring(0,7);
+		        if(columnName.equals("year"))
+		        	value = value.substring(0,4);
+		        obj.put(columnName, value);  
+		    }   
+			//obj.put("producer_id", rs.getString("producer_id"));
+			arr.add(obj);
+	    } 
+		return arr;
+		/*String title = titles[viewId];
+		ExcelUtil.downloadExcelFile(title, arr, response);*/
+		
+	}
+	
+	public String addWhereClaus(String whereClaus, String key, String value){
+		if(whereClaus.length()>0)
+			whereClaus += " AND "+ key + "="+"'"+value+"'";
+		else
+			whereClaus = " WHERE "+key + "="+"'"+value+"'";
+		return whereClaus;
+	}
+	
 	@RequestMapping("/orderShow")
 	@ResponseBody
 	/*soymilk/orderShow.do?id=01*/

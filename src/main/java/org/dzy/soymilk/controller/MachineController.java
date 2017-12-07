@@ -72,6 +72,19 @@ public class MachineController {
 		return "showMachine";
 	}
 	
+	@RequestMapping("/login")
+	@ResponseBody
+	public JSONObject login(HttpServletRequest req){
+		String username = req.getParameter("username");
+		String password = req.getParameter("password");
+		JSONObject result = new JSONObject();
+		if(username.equals("18817583610") && password.equals("123456"))
+			result.put("success", true);
+		else
+			result.put("success", false);
+		return result;
+	}
+	
 	@RequestMapping("/jsp/machine_List.do")
 	@ResponseBody
 	public JSONObject getMachineList(HttpServletRequest req, Model model){

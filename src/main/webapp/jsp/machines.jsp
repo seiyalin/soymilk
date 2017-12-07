@@ -76,7 +76,7 @@
        
         <div class="widget-box">   
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>设备管理信息</h5>
+            <h5>设备管理信息&emsp;&emsp;<a href="/soymilk/jsp/orderQuery.jsp">销售报表</a></h5> 
           </div>
                 <!-- Page Body -->
                 <div class="page-body">
