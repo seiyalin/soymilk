@@ -6,6 +6,8 @@
 <title>设备管理</title>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+	<link href="../css/dzy.css" type="text/css" rel="stylesheet">
 <!--Basic Styles-->
     <link href="../common/assets/css/bootstrap.min.css" rel="stylesheet" />
     <link id="bootstrap-rtl-link" href="" rel="stylesheet" />
@@ -42,6 +44,7 @@
 </head>
 <body>
 
+
   <!-- Loading Container -->
     <div class="loading-container">
         <div class="loading-progress">
@@ -76,8 +79,15 @@
        
         <div class="widget-box">   
           <div class="widget-title"> <span class="icon"><i class="icon-th"></i></span>
-            <h5>设备管理信息&emsp;&emsp;<a href="/soymilk/jsp/orderQuery.jsp">销售报表</a></h5> 
+            <!-- <h5>设备管理信息&emsp;&emsp;<a href="/soymilk/jsp/orderQuery.jsp">销售报表</a></h5>  -->
+            <div class="navigate">
+			<ul class="topbar brick">
+				<li class="brick current"><a href="/soymilk/jsp/machines.jsp" style="color:black;text-decoration:none;">设备管理</a></li>
+				<li class="brick"><a href="/soymilk/jsp/orderQuery.jsp" style="color:black;text-decoration:none;">销售报表</a></li>
+			</ul>
+			</div>
           </div>
+          
                 <!-- Page Body -->
                 <div class="page-body">
                     <div class="row">

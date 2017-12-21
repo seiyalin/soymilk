@@ -88,13 +88,24 @@ public class MachineController {
 	@RequestMapping("/jsp/machine_List.do")
 	@ResponseBody
 	public JSONObject getMachineList(HttpServletRequest req, Model model){
-		List<Machine> list = machineService.getAllMachine();
+		/*List<Machine> list = machineService.getAllMachine();*/
 		/*model.addAttribute("list",list);
 		System.out.println(model);*/
+		//分页
+		int sEcho = Integer.parseInt(req.getParameter("sEcho"));  //页数
+		int start = Integer.parseInt(req.getParameter("iDisplayStart"));		
+		int limit = Integer.parseInt(req.getParameter("iDisplayLength"));
+		
+		List<Machine> list = machineService.getAllMachineByLimit(start, limit);
+		int count = machineService.getCount();
 		String jsonString = JSON.toJSONString(list);
 		JSONArray jsonArray = JSONArray.parseArray(jsonString);
 		JSONObject result = new JSONObject();
 		result.put("aaData", jsonArray);
+		result.put("sEcho", sEcho);
+		result.put("success", true);
+		result.put("iTotalRecords", count);
+		result.put("iTotalDisplayRecords", count);
 		/*System.out.println(result);*/
 		return result;
 	}

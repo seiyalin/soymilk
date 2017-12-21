@@ -12,7 +12,11 @@ public interface MachineMapper {
     int insertSelective(Machine record);
     
     List<Machine> getAllMachine();
-
+    
+    List<Machine> getAllMachineByLimit(int start, int limit);
+    
+    int getCount();
+    
     Machine selectByPrimaryKey(String machineId);
 
     int updateByPrimaryKeySelective(Machine record);

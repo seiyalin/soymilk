@@ -36,7 +36,7 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
         {
             cmbAddOption(machineId, item.machineList[i], null);
         }
-        cmbSelect(machineId, "HD001");
+        cmbSelect(machineId, "all");
     }
 	
 	 function changeProducer()
@@ -49,7 +49,7 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 	        {
 	            cmbAddOption(channelId, item.channelList[i].name, item.channelList[i]);
 	        }
-	        cmbSelect(channelId, "YP");
+	        cmbSelect(channelId, "all");
 	        changeChannel();
 	        channelId.onchange = changeChannel;
 	    }
@@ -63,7 +63,7 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 	        {
 	            cmbAddOption(day, item.dayList[i], null);
 	        }
-	        cmbSelect(day, "--");
+	        cmbSelect(day, "all");
 	    }
 		
 		 function changeYear()
@@ -76,7 +76,7 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 		        {
 		            cmbAddOption(month, item.monthList[i].name, item.monthList[i]);
 		        }
-		        cmbSelect(month, "--");
+		        cmbSelect(month, "all");
 		        changeMonth();
 		        month.onchange = changeMonth;
 		    }
@@ -90,10 +90,10 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 	    {
 	        cmbAddOption(producerId, producerList[i].name, producerList[i]);
 	    }
-	    cmbSelect(producerId, 'SH');
+	    cmbSelect(producerId, 'all');
 	    changeProducer();
 	    producerId.onchange = changeProducer;
-	    cmbSelect(year, '--');
+	    cmbSelect(year, 'all');
 	    changeYear();
 	    year.onchange = changeYear;
 };
@@ -101,6 +101,7 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 	var producerList = [
 	{name:'BJ', channelList:[         
 		{name:'HD', machineList:['QH001','QH002']},
+		{name:'CY', machineList:['XD001','XD002']},
 		{name:'all', machineList:['--']},
 		{name:'--', machineList:['--']}
 	]},
@@ -137,8 +138,8 @@ var selectInit = function(_producerId, _channelId, _machineId, _year, _month, _d
 	
 	function showOnline(){
 		$.post("showOnline.do",$("#selectQuery").serialize(),function(json){
-			
-			/*$('#columns').columns('destroy');*/
+			/*
+			$('#columns').columns('destroy');*/
 			/*$('#columns').columns('create');*/
 			$('#columns').columns({data: json,});
 			/*createTable(data);*/

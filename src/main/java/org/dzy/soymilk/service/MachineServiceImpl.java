@@ -47,6 +47,14 @@ public class MachineServiceImpl implements MachineService {
 	public List<Machine> getAllMachine(){
 		return machineDao.getAllMachine();
 	}
+	
+	public List<Machine> getAllMachineByLimit(int start, int limit){
+		return machineDao.getAllMachineByLimit(start, limit);
+	}
+	
+	public int getCount(){
+		return machineDao.getCount();
+	}
 
 	public String weixinPay(String machineId, int productId, int num) throws JDOMException, IOException{
 		 String out_trade_no = "" + System.currentTimeMillis(); //订单号

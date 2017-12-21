@@ -1,0 +1,51 @@
+#hd{
+	zoom: 1;
+}
+
+.nav{
+	background: #f5f5f7;
+    border-bottom: 1px solid #d9d9d9;
+    min-width: 1020px;
+    margin-bottom: 4px;
+    z-index: 502;
+    position: fixed;
+    left: 200px;
+    right: 0;
+    top: 40px;
+    -webkit-transition: left .2s linear;
+    -moz-transition: left .2s linear;
+    transition: left .2s linear;
+}
+
+.clearfix {
+    zoom: 1;
+}
+
+.navigate{
+	margin-top: 5px;
+	white-space: nowrap;
+    float: left;
+    position: relative;
+    z-index: 1;
+}
+
+.topbar{
+	margin-bottom: -1px;
+}
+
+.topbar li{
+	border-bottom: 2px solid transparent;
+    margin: 0 15px;
+    max-width: 105px;
+    float: left;
+}
+
+.topbar li.current{
+	border-bottom-color: #5091f9;
+}
+
+.brick{
+	display: inline-block;
+    vertical-align: top;
+    font-size : 18px;
+}

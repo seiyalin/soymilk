@@ -18,6 +18,10 @@ public interface MachineService {
 	
 	public List<Machine> getAllMachine();
 	
+	public List<Machine> getAllMachineByLimit(int start, int limit);
+	
+	int getCount();
+	
 	public String weixinPay(String machineId, int productId, int num) throws JDOMException, IOException;
 
 }

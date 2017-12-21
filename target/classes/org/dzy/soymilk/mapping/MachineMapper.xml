@@ -17,6 +17,17 @@
     <include refid="Base_Column_List" />
     from machine_info
   </select>
+  <!--分页  -->
+  <select id="getAllMachineByLimit" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from machine_info limit #{arg0}, #{arg1}
+  </select>
+  
+  <select id="getCount" resultType="java.lang.Integer">
+    select count(*) from machine_info
+  </select>
+  
   <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
