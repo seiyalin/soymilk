@@ -46,7 +46,7 @@
 
 
   <!-- Loading Container -->
-    <div class="loading-container">
+ <!--    <div class="loading-container">
         <div class="loading-progress">
             <div class="rotator">
                 <div class="rotator">
@@ -66,7 +66,7 @@
             </div>
             <div class="rotator"></div>
         </div>
-    </div>
+    </div> -->
     <!--  /Loading Container -->
 <div id="content">
 
@@ -84,6 +84,7 @@
 			<ul class="topbar brick">
 				<li class="brick current"><a href="/soymilk/jsp/machines.jsp" style="color:black;text-decoration:none;">设备管理</a></li>
 				<li class="brick"><a href="/soymilk/jsp/orderResult.jsp" style="color:black;text-decoration:none;">销售报表</a></li>
+				<li class="brick"><a href="/soymilk/jsp/orderFigure.jsp" style="color:black;text-decoration:none;">图表展示</a></li>
 			</ul>
 			</div>
           </div>

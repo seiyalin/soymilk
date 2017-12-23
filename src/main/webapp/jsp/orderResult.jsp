@@ -53,6 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			<ul class="topbar brick">
 				<li class="brick"><a href="/soymilk/jsp/machines.jsp" style="color:black;text-decoration:none;">设备管理</a></li>
 				<li class="brick current"><a href="/soymilk/jsp/orderResult.jsp" style="color:black;text-decoration:none;">销售报表</a></li>
+				<li class="brick"><a href="/soymilk/jsp/orderFigure.jsp" style="color:black;text-decoration:none;">图表展示</a></li>
 			</ul>
 			</div>
           </div>
