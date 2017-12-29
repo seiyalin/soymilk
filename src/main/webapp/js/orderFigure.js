@@ -3,6 +3,8 @@ $(document).ready(function(){
 	// 初始化echarts示例mapChart
 	var mapChart = echarts.init(document.getElementById('map-wrap'));
 	mapChart.setOption(option);
+	var bmap = mapChart.getModel().getComponent('bmap').getBMap();
+	bmap.addControl(new BMap.MapTypeControl());
 	mapChart.on('click',function(params){
 		if(params.seriesName!="设备"){
 			/*var city = params.name;
@@ -10,19 +12,14 @@ $(document).ready(function(){
 			return;
 		}
 		else{
-			/*alert(params.name);*/
-			if(($("#year option:selected").val()=="all") || ($("#month option:selected").val()=="all") ||($("#month option:selected").val()=="--")){
-				alert("请选择正确的年份和月份！");
-				return;
-			}
-			else{
+			/*alert(params.name);*/			
 
 			var producerId = document.getElementById("producerId");
 			var channelId = document.getElementById("channelId");
 			var machineId = document.getElementById("machineId");
-			var year = document.getElementById("year");
-			var month = document.getElementById("month");
-			var day = document.getElementById("day");
+			/*var year = document.getElementById("year");
+			var month = document.getElementById("month");*/
+			/*var day = document.getElementById("day");*/
 			var s=params.name.split('-');
 			producerId.value = s[0];
 			channelId.value = s[1];
@@ -31,7 +28,6 @@ $(document).ready(function(){
 			var monthTitle=params.name+" "+$("#year option:selected").val()+"年销量";
 			var yearTitle=params.name+"各年销量";
 			
-			day.value="all";	
 			$.ajax({
 				url:"showOnline.do",
 				data:$("#queryByMap").serialize(),
@@ -128,11 +124,12 @@ $(document).ready(function(){
 			});
 			
 			
-			day.value="--";			
-			month.value="all";			
+			/*day.value="--";			
+			month.value="all";	*/
 			$.ajax({
 				url:"showOnline.do",
-				data:$("#queryByMap").serialize(),
+				/*data:$("#queryByMap").serialize(),*/
+				data:"producerId="+s[0]+"&channelId="+s[1]+"&machineId="+s[2]+"&year="+$("#year option:selected").val()+"&month=all&day=--&productId=all",
 				type:"post",
 				dataType:"json",
 				success:function(json){
@@ -225,13 +222,14 @@ $(document).ready(function(){
 				}
 			});
 			
-			day.value="--";			
+			/*day.value="--";			
 			month.value="--";
-			year.value="all";
+			year.value="all";*/
 			
 			$.ajax({
 				url:"showOnline.do",
-				data:$("#queryByMap").serialize(),
+				/*data:$("#queryByMap").serialize(),*/
+				data:"producerId="+s[0]+"&channelId="+s[1]+"&machineId="+s[2]+"&year=all&month=--&day=--&productId=all",
 				type:"post",
 				dataType:"json",
 				success:function(json){
@@ -325,7 +323,7 @@ $(document).ready(function(){
 			});
 			
 		}
-		}
+		
 	});
 	
 	var dayChart = echarts.init(document.getElementById('day_sales'));
@@ -343,13 +341,16 @@ var myData = [
             {name: 'SH-YP-HD002', value: [121.508, 31.303,'SH-YP-HD002']},
             {name: 'SH-HK-SHJ001', value: [121.509, 31.297,'SH-HK-SHJ001']},
             {name: 'SH-HK-SHJ002', value: [121.507, 31.296,'SH-HK-SHJ002']},
-            {name: 'BJ-HD-QH001', value: [116.3, 40.01, 'BJ-HD-QH001']} 
+            {name: 'BJ-HD-QH001', value: [116.341807, 40.012151, 'BJ-HD-QH001']},
+            {name: 'BJ-HD-QH002', value: [116.32456, 40.007017, 'BJ-HD-QH002']},
+            {name: 'BJ-CY-XD001', value: [116.554727, 40.025144, 'BJ-CY-XD001']},
+            {name: 'BJ-CY-XD002', value: [116.567555, 40.022381, 'BJ-CY-XD002']}
           ];
 
 
 // mapChart的配置
 var option = {
-	geo: {
+	/*geo: {
 	      map: 'china',
 	      itemStyle: {					// 定义样式
 	         normal: {					// 普通状态下的样式
@@ -360,13 +361,178 @@ var option = {
 	              areaColor: '#99cc33',
 	            }
 	  	  }
-	},
+	},*/
+		bmap: {
+	        center: [120.46013, 30.255564],
+	        zoom: 5, //初始缩放比
+	        roam: true,
+	        mapStyle: {
+                   styleJson: [
+	         /* {
+	                    'featureType': 'land',     //调整土地颜色
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                              'color': '#081734'
+	                    }
+	          },
+	          {
+	                    'featureType': 'building',   //调整建筑物颜色
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                              'color': '#04406F'
+	                    }
+	          },*/
+	         {
+	                    'featureType': 'building',   //调整建筑物标签是否可视
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	        /*  {
+	                    'featureType': 'highway',     //调整高速道路颜色
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'color': '#015B99'
+	                    }
+	          },*/
+	          {
+	                    'featureType': 'highway',    //调整高速名字是否可视
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	         /* {
+	                    'featureType': 'arterial',   //调整一些干道颜色
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'color':'#003051'
+	                    }
+	          },*/
+	          {
+	                    'featureType': 'arterial',
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'green',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	         /* {
+	                    'featureType': 'water',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                              'color': '#044161'
+	                    }
+	          },*/
+	         /* {
+	                    'featureType': 'subway',    //调整地铁颜色
+	                    'elementType': 'geometry.stroke',
+	                    'stylers': {
+	                    'color': '#003051'
+	                    }
+	          },*/
+	          {
+	                    'featureType': 'subway',
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'railway',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'railway',
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	         /* {
+	                    'featureType': 'all',     //调整所有的标签的边缘颜色
+	                    'elementType': 'labels.text.stroke',
+	                    'stylers': {
+	                              'color': '#313131'
+	                    }
+	          },
+	          {
+	                    'featureType': 'all',     //调整所有标签的填充颜色
+	                    'elementType': 'labels.text.fill',
+	                    'stylers': {
+	                              'color': '#FFFFFF'
+	                    }
+	          },*/
+	          {
+	                    'featureType': 'manmade',   
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'manmade',
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'local',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	          {
+	                    'featureType': 'local',
+	                    'elementType': 'labels',
+	                    'stylers': {
+	                    'visibility': 'off'
+	                    }
+	          },
+	        /*  {
+	                    'featureType': 'subway',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                              'lightness': -65
+	                    }
+	          },
+	          {
+	                    'featureType': 'railway',
+	                    'elementType': 'all',
+	                    'stylers': {
+	                              'lightness': -40
+	                    }
+	          },*/
+	          {
+	                    'featureType': 'boundary',
+	                    'elementType': 'geometry',
+	                    'stylers': {
+	                              'color': '#8b8787',
+	                              'weight': '1',
+	                              'lightness': -62,
+	                              'visibility':'on'
+	                    }
+	          }]
+	        }
+	    },
 	backgroundColor:'#ffffff',
 	series: [
 	 		{
 	 			name: '设备', // series名称
 	 			type: 'scatter', // series图表类型
-	 			coordinateSystem: 'geo', // series坐标系类型
+	 			coordinateSystem: 'bmap', // series坐标系类型geo
 	 			data:myData,
 	 			label:{
 	 				normal:{

@@ -12,7 +12,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <title>销售数据展示</title>
     
 	<link rel="stylesheet" type="text/css" href="css/dzy.css">
-	
+	 <link id="beyond-link" href="css/beyond.min.css" rel="stylesheet" />
+	<link href="common/assets/css/bootstrap.min.css" rel="stylesheet" />	
 
   </head>
   
@@ -35,10 +36,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
           
           <div class="page-body">
-    	<div class="row">
+    		<div class="row">
           <div class="col-xs-12 col-md-12">
             <div class="widget widget-table-container">
-              <div class="widget-body">
+              <div class="widget-body whole">
     <div id="map-wrap" class="map"></div>
     <div class="queryForm">
     	<form action="" id="queryByMap" align="center">
@@ -48,7 +49,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	年：	<select id="year" name="year">
     		<option value="2017">2017</option>
     		<option value="2018">2018</option>
-    		<option value="all">all</option>
     	</select>&emsp;&emsp;
 		月：	<select id="month" name="month">
 			<option value="12">12</option>
@@ -63,8 +63,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     		<option value="9">9</option>
     		<option value="10">10</option>
     		<option value="11">11</option>
-    		<option value="all"></option>
-    		<option value="--"></option>
     		
 		</select><br>
 		<input id="productId" name="productId" type="hidden" value="all"><br>
@@ -82,7 +80,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div></div></div></div></div></div></div></div>
     
     <script src="common/assets/js/jquery-2.0.3.min.js"></script>
+    <script src="http://api.map.baidu.com/api?v=2.0&ak=53oVIOgmSIejwV7EfphPgTynOZbIiVYu"></script>
 	<script type="text/javascript" src="js/echarts.js"></script>
+	<script type="text/javascript" src="js/bmap.min.js"></script>
 	<script type="text/javascript" src="js/china.js"></script>
 	<script type="text/javascript" src="js/orderFigure.js"></script>
   </body>

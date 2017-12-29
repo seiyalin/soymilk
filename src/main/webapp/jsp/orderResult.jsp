@@ -34,8 +34,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="common/assets/css/animate.min.css" rel="stylesheet" />
     <link href="common/assets/css/customer.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
-    
-	
 
   </head>
   
@@ -57,17 +55,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			</ul>
 			</div>
           </div>
-  
-          <!-- <div id="hd" class="nav clearfix"> 
-            <h5>设备管理信息&emsp;&emsp;<a href="/soymilk/jsp/orderQuery.jsp">销售报表</a></h5> 
-            <div class="navigate">
-			<ul class="topbar brick">
-				<li class="brick"><a href="/soymilk/jsp/machines.jsp" style="color:black;text-decoration:none;">设备管理</a></li>
-				<li class="brick current"><a href="/soymilk/jsp/orderQuery.jsp" style="color:black;text-decoration:none;">销售报表</a></li>
-			</ul>
-		</div>
-          </div> -->
-  	<!-- <h1 align="center">豆芝缘销售报表查询</h1> -->
     <div class="page-body">
     	<div class="row">
           <div class="col-xs-12 col-md-12">
